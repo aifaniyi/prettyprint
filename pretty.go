@@ -6,11 +6,11 @@ import (
 	"strings"
 )
 
-const indt = "  "
+const indt = " "
 
 // Struct :
 func Struct(val interface{}) string {
-	return structRec(reflect.ValueOf(val), indt)
+	return structRec(reflect.ValueOf(val), "")
 }
 
 // structRec :
@@ -35,7 +35,6 @@ func structRec(val reflect.Value, indent string) string {
 		for i := 0; i < val.NumField(); i++ {
 			f := val.Field(i)
 
-			// fmt.Printf("%d: %s %s = %v\n", i, typ.Field(i).Name, f.Type(), f.Interface())
 			if f.IsValid() {
 				arr = append(arr, fmt.Sprintf("%s\"%s\": %s", indent+indt,
 					typ.Field(i).Name, structRec(f, indent+indt)))

@@ -1,9 +1,8 @@
 package prettyprint
 
 import (
-	"fmt"
+	"strings"
 	"testing"
-	"time"
 )
 
 type Model struct {
@@ -11,13 +10,14 @@ type Model struct {
 	Lastname   string
 	MiddleName string
 	Age        *int
-	Receipts   []struct {
-		ItemID      int
-		Date        time.Time
-		Amount      float32
-		Quantity    int
-		Description string
-	}
+	Receipt    *Receipt
+}
+
+type Receipt struct {
+	ItemID      int
+	Amount      float32
+	Quantity    int
+	Description string
 }
 
 func TestPrettyPrint(t *testing.T) {
@@ -27,11 +27,22 @@ func TestPrettyPrint(t *testing.T) {
 		Lastname:   "Laurent",
 		MiddleName: "Edmund",
 		Age:        &age,
+		Receipt: &Receipt{
+			ItemID:   5000001,
+			Amount:   50.2,
+			Quantity: 3,
+		},
 	}
 
 	str := Struct(md)
 
-	fmt.Println(str)
+	if !strings.Contains(str, "Alonso") {
+		t.Fatalf("output must contain %s", md.Firstname)
+	}
+
+	if !strings.Contains(str, "5000001") {
+		t.Fatalf("output must contain %d", md.Receipt.ItemID)
+	}
 }
 
 func TestPrettyPrintJSON(t *testing.T) {
