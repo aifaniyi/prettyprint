@@ -1,6 +1,6 @@
 # prettyprint
 
-A golang library to pretty print golang structs using reflections.
+A golang library to pretty print golang structs using reflections. Useful for debugging the content of structs during development.
 
 ### Installation
 ```bash
