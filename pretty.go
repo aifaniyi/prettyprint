@@ -31,16 +31,27 @@ func structRec(val reflect.Value, indent string) string {
 
 	case reflect.Struct:
 		arr := make([]string, 0)
-		arr = append(arr, indent+"{")
+		arr = append(arr, indt+"{")
 		for i := 0; i < val.NumField(); i++ {
 			f := val.Field(i)
 
 			if f.IsValid() {
-				arr = append(arr, fmt.Sprintf("%s\"%s\": %s", indent+indt,
+				arr = append(arr, fmt.Sprintf("%s\"%s\": %s,", indent+indt,
 					typ.Field(i).Name, structRec(f, indent+indt)))
 			}
 		}
 		arr = append(arr, indent+"}")
+		return strings.Join(arr, "\n")
+
+	case reflect.Slice, reflect.Array:
+		arr := make([]string, 0)
+		arr = append(arr, indt+"[")
+		for i := 0; i < val.Len(); i++ {
+			f := val.Index(i)
+			arr = append(arr, fmt.Sprintf("%s%s,", indent,
+				structRec(f, indent+indt)))
+		}
+		arr = append(arr, indent+"]")
 		return strings.Join(arr, "\n")
 	}
 
