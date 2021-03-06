@@ -34,7 +34,7 @@ func main(){
 			ItemID:   5000001,
 			Amount:   50.2,
 			Quantity: 3,
-            Description: "sample receipt data"
+            Description: "sample receipt data",
 		},
 	}
 
