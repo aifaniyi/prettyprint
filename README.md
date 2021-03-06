@@ -35,7 +35,7 @@ func main(){
 			Amount:   50.2,
 			Quantity: 3,
             Description: "sample receipt data",
-		},
+        },
 	}
 
 	str := prettyprint.Struct(md)
